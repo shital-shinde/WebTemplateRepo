@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<configuration debug="true" scan="false" scanPeriod="60 seconds">
+   <contextName>dsfj-tomcat-spring-mvc-web</contextName>
+   <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+   <property name="EMAIL_HOST" value="mail.dx.deere.com" />
+   
+	<property name="generalLogPattern" value="%date [%thread] %mdc %-5level %logger %msg %n"/>
+	<property name="iafDebugLogPattern" value="TimeStamp: %d{yyyy-MM-dd HH:mm:ss.SSS} %n{}AppId:     %contextName %n{}User:      %X{userId} %n{}Thread:    %thread %n{}Severity:  %level %n{}Category:  %logger %n{}MessageId: #0# %n{}Message:   %msg %n{}%n{}"/>
+	<property name="iafErrorLogPattern" value="TimeStamp: %d{yyyy-MM-dd HH:mm:ss.SSS} %n{}AppId:     %contextName %n{}User:      %X{userId} %n{}Thread:    %thread %n{}Severity:  %level %n{}Category:  %logger %n{}MessageId: #0# %n{}Message:   %msg %n{}%n{}"/>
+	<property name="iafPerformanceLogPattern" value="application\t%X{startEnd}\t%X{daysSince1970}\t%X{millisForDay}\t%thread\t%logger\t%X{methodName}\tSessionId:%X{sessionId}\t%n"/>
+	<property name="emailLogPattern" value="%date[%thread]%mdc%-5level%logger%msg"/>
+		
+<!--  start of expression language to set properties as per environment -->
+<if condition='"Local".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+       <property name="ORIKA_LOGGER_LEVEL" value="off" />
+       <property name="SPRING_LOGGER_LEVEL" value="off" />
+       <property name="HIBERNATEJPA_LOGGER_LEVEL" value="off" />
+	   <property name="TO_EMAIL" value="abc@johndeere.com" />
+       <property name="JAVA_PROJECT_LOGGER_LEVEL" value="trace" />
+       <property name="WEB_PROJECT_LOGGER_LEVEL" value="trace" />
+    </then>
+</if> 
+
+<if condition='"Devl".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+       <property name="ORIKA_LOGGER_LEVEL" value="off" />
+       <property name="SPRING_LOGGER_LEVEL" value="off" />
+       <property name="HIBERNATEJPA_LOGGER_LEVEL" value="off" />
+	   <property name="TO_EMAIL" value="abc@johndeere.com" />
+       <property name="JAVA_PROJECT_LOGGER_LEVEL" value="trace" />
+       <property name="WEB_PROJECT_LOGGER_LEVEL" value="trace" />
+    </then>
+</if> 
+
+<if condition='"QA".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+       <property name="ORIKA_LOGGER_LEVEL" value="off" />
+       <property name="SPRING_LOGGER_LEVEL" value="off" />
+       <property name="HIBERNATEJPA_LOGGER_LEVEL" value="off" />
+	   <property name="TO_EMAIL" value="abc@johndeere.com" />
+       <property name="JAVA_PROJECT_LOGGER_LEVEL" value="error" />
+       <property name="WEB_PROJECT_LOGGER_LEVEL" value="error" />
+    </then>
+</if> 
+
+<if condition='"Prod".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+       <property name="ORIKA_LOGGER_LEVEL" value="off" />
+       <property name="SPRING_LOGGER_LEVEL" value="off" />
+       <property name="HIBERNATEJPA_LOGGER_LEVEL" value="off" />
+	   <property name="TO_EMAIL" value="abc@johndeere.com" />
+       <property name="JAVA_PROJECT_LOGGER_LEVEL" value="error" />
+       <property name="WEB_PROJECT_LOGGER_LEVEL" value="error" />
+    </then>
+</if> 
+
+
+
+<!--  configure appender for rolling file settings -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> 
+ 	    <encoder> 
+	      <!-- <pattern>%d [%thread] %level %logger [%X{userId}] %msg %X{ParamInfo} [%X{paramInfoForException}] %n </pattern>  -->
+	      <pattern>%date [%thread] %mdc %-5level %logger %msg %n</pattern>
+    	</encoder> 
+  	</appender> 
+  	
+     
+		    <appender name="ErrorLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+			    <filter class="ch.qos.logback.classic.filter.LevelFilter"> 
+				      <level>ERROR</level> 
+				      <onMatch>ACCEPT</onMatch> 
+				      <onMismatch>DENY</onMismatch> 
+			    </filter>
+			    <file>${IafMOD}/logs/Error.log</file>
+		    	<append>true</append>  	
+			  	<rollingPolicy   class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<FileNamePattern>${IafMOD}/logs/Error%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+   					<timeBasedFileNamingAndTriggeringPolicy   class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"> 
+				        <!-- or whenever the file size reaches 100MB --> 
+				        <maxFileSize>10MB</maxFileSize> 
+      				</timeBasedFileNamingAndTriggeringPolicy>					
+				 <!-- keep 30 days' worth of history --> 
+				    <maxHistory>30</maxHistory> 
+					
+				 <!-- keep 30 days' worth of history --> 
+				    <maxHistory>30</maxHistory> 
+  				</rollingPolicy>
+  				
+			    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			        <!--  
+			    	<pattern>%d [%thread] %level %logger [%X{userId}] %msg  %X{ParamInfo} %n </pattern>
+			    	-->
+		   	        <pattern>${iafErrorLogPattern}</pattern>
+			    </encoder>
+		    </appender>
+		     
+
+
+
+			    <appender name="DebugLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+			   	<filter class="ch.qos.logback.classic.filter.LevelFilter"> 
+   				    <level>ERROR</level> 
+			    	<onMatch>DENY</onMatch>
+			    	<onMismatch>NEUTRAL</onMismatch>
+	   		    </filter>
+			    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			    	<evaluator>
+			    	<expression>if( (mdc != null) &amp;&amp;  (mdc.get("Performance") != null)) { return true;} else return false; </expression>
+			    	</evaluator>
+			    	<onMatch>DENY</onMatch>
+			    	<onMismatch>NEUTRAL</onMismatch>
+			    </filter>
+			    
+			    <file>${IafMOD}/logs/Debug.log</file>
+		    	<append>true</append>  	
+			  	<rollingPolicy   class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<FileNamePattern>${IafMOD}/logs/Debug%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+   					<timeBasedFileNamingAndTriggeringPolicy   class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"> 
+				        <!-- or whenever the file size reaches 100MB --> 
+				        <maxFileSize>10MB</maxFileSize> 
+      				</timeBasedFileNamingAndTriggeringPolicy>					
+				 <!-- keep 30 days' worth of history --> 
+				    <maxHistory>30</maxHistory> 
+  				</rollingPolicy>
+ 			
+				    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			   	        <pattern>${iafDebugLogPattern}</pattern>
+				    </encoder>
+			    </appender> 
+
+   
+		    <appender name="PerformanceLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+			    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			    	<evaluator>
+			    	<expression>if( (mdc != null) &amp;&amp;  (mdc.get("Performance") != null)) { return true;} else return false; </expression>
+			    	</evaluator>
+			    	<onMatch>NEUTRAL</onMatch>
+			    	<onMismatch>DENY</onMismatch>
+			    </filter>
+			     
+			   	<filter class="ch.qos.logback.classic.filter.LevelFilter"> 
+   				    <level>TRACE</level> 
+			    	<onMatch>ACCEPT</onMatch>
+			    	<onMismatch>DENY</onMismatch>
+	   		    </filter> 
+			    <file>${IafMOD}/logs/Performance.log</file>
+		    	<append>true</append>  	
+			  	<rollingPolicy   class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<FileNamePattern>${IafMOD}/logs/Performance%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+   					<timeBasedFileNamingAndTriggeringPolicy   class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"> 
+				        <!-- or whenever the file size reaches 100MB --> 
+				        <maxFileSize>10MB</maxFileSize> 
+      				</timeBasedFileNamingAndTriggeringPolicy>					
+				 <!-- keep 30 days' worth of history --> 
+				    <maxHistory>30</maxHistory> 
+  				</rollingPolicy>
+			    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			    	<!--  for Jamon performance logging -->
+			    	<!-- <pattern>%date	%level	%logger	%msg	%n</pattern>  -->
+			    	
+			    	<!--  Pattern for IAF performance logging -->
+			    	<!-- 
+			    	<pattern>application	%X{startEnd}	%X{daysSince1970}	%X{millisForDay}	%thread	%logger	%X{methodName}	SessionId:%X{sessionId}	%n</pattern>
+			    	-->
+			    	<pattern>${iafPerformanceLogPattern}</pattern>
+			    </encoder>
+		    </appender> 
+
+
+		    <appender name="EmailLogAppender" class="ch.qos.logback.classic.net.SMTPAppender">
+			    <filter class="ch.qos.logback.classic.filter.LevelFilter"> 
+				      <level>ERROR</level> 
+				      <onMatch>ACCEPT</onMatch> 
+				      <onMismatch>DENY</onMismatch> 
+			    </filter>
+			     
+			    <SMTPHost>${EMAIL_HOST}</SMTPHost> 
+			    <to>${TO_EMAIL}</to>
+			    <from>${TO_EMAIL}</from> 
+			    <subject>Logback Test Mail</subject>
+			    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"> 
+					<layout class="ch.qos.logback.classic.html.HTMLLayout"> 
+			    		<!-- <pattern>%d[%thread]%level%logger%X{userId}%msg%X{ParamInfo}</pattern>  -->
+			   	        <pattern>${emailLogPattern}</pattern>
+			    	</layout>
+    			</encoder> 
+		    </appender> 
+
+<!--  end of appenders configuration -->
+
+
+<!--  start of loggers configuration -->
+  <logger name="org.hibernate" level="${HIBERNATEJPA_LOGGER_LEVEL}" >
+  </logger>
+
+   
+  <logger name="org.springframework" level="${SPRING_LOGGER_LEVEL}" >
+  </logger>
+
+  <logger name="ma.glasnost" level="${ORIKA_LOGGER_LEVEL}" >
+  </logger>
+   
+  <logger name="com.deere.dsfj.jdorder" level="${JAVA_PROJECT_LOGGER_LEVEL}">
+  </logger>
+
+  <logger name="com.deere.dsfj.jdorderspringmvcweb" level="${WEB_PROJECT_LOGGER_LEVEL}">
+  </logger>
+
+  <root level="off">
+     <appender-ref ref="ErrorLogAppender" />
+     <appender-ref ref="PerformanceLogAppender" />
+     <appender-ref ref="DebugLogAppender" />
+  </root>
+
+<!--  end of loggers configuration -->
+
+
+
+
+<!--  configuration of appender as per environment -->
+<if condition='"Local".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+	  <root level="off">
+	    <!--  <appender-ref ref="EmailLogAppender" />  -->
+	     <appender-ref ref="STDOUT" />
+	  </root>
+	  
+       
+    </then>
+</if> 
+
+<if condition='"Devl".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+	  <root level="off">
+	     <appender-ref ref="EmailLogAppender" />
+	  </root>
+       
+    </then>
+</if> 
+
+<if condition='"QA".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+  	<!--      
+	  <root level="off">
+	     <appender-ref ref="EmailLogAppender" />
+	  </root>
+	 -->	  
+    </then>
+</if> 
+
+<if condition='"Prod".equalsIgnoreCase(property("IafConfigSuffix"))'> 
+    <then>
+  	<!--      
+	  <root level="off">
+	     <appender-ref ref="EmailLogAppender" />
+	  </root>
+	 -->	  
+    </then>
+</if> 
+  
+</configuration>

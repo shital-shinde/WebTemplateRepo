@@ -1,0 +1,211 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+
+	<display-name>certification</display-name>
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>com.deere.dsfj.jdorderspringmvcweb.config.WebApplicationContextConfig</param-value>
+	</context-param>
+	
+	<filter>
+		<description>MDCFilter</description>
+		<display-name>MDCFilter</display-name>
+		<filter-name>MDCFilter</filter-name>
+		<filter-class>com.deere.dsfj.utility.MDCFilter</filter-class>
+	</filter>
+	<filter>
+		<description>SiteMinderFilter</description>
+		<display-name>SiteMinderFilter</display-name>
+		<filter-name>SiteMinderFilter</filter-name>
+		<filter-class>com.deere.dsfj.utility.siteminder.SiteMinderFilter</filter-class>
+	</filter>
+	<!-- for enabling spring security uncomment this, add rbacclient, include it in commonbeans.xml and include spring-security.xml in webapplication context -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>MDCFilter</filter-name>
+		<url-pattern>/web/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+  		<filter-name>SiteMinderFilter</filter-name>
+  		<url-pattern>/web/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/web/*</url-pattern>
+	</filter-mapping>
+	
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+		
+	<listener>
+		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+	</listener>
+	
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>DispatcherServlet</display-name>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<description>contextClass</description>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
+			<description>contextConfigLocation</description>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>com.deere.dsfj.jdorderspringmvcweb.config.SpringMvcConfig</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		
+		
+	</servlet>		
+
+	<servlet>
+		<display-name>SiteMinderServlet</display-name>
+		<servlet-name>SiteMinderServlet</servlet-name>
+		<servlet-class>com.deere.dsfj.utility.siteminder.SiteMinderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>/web/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SiteMinderServlet</servlet-name>
+		<url-pattern>/SiteMinderServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<description>Global DateServlet</description>
+		<display-name>Global DateServlet</display-name>
+		<servlet-name>GlobalDateServlet</servlet-name>
+		<servlet-class>DateServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF Class Finder Servlet</description>
+		<display-name>IAF Class Finder Servlet</display-name>
+		<servlet-name>IAFClassFinderServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.utility.secure.servlets.ClassFinderServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF Context Servlet</description>
+		<display-name>IAF Context Servlet</display-name>
+		<servlet-name>IAFContextServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.configuration.secure.servlets.ContextServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF Directory Viewer</description>
+		<display-name>IAF Directory Viewer</display-name>
+		<servlet-name>IAFDirectoryViewer</servlet-name>
+		<servlet-class>com.deere.u90.iaf.utility.secure.servlets.DirectoryViewer</servlet-class>
+	</servlet>
+
+	<servlet>
+		<description>IAF Encryption Servlet</description>
+		<display-name>IAF Encryption Servlet</display-name>
+		<servlet-name>IAFEncryptionServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.configuration.secure.servlets.EncryptionServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF JDBC DataSource Servlet</description>
+		<display-name>IAF JDBC DataSource Servlet</display-name>
+		<servlet-name>IAFDataSourceServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.jdbc.connection.secure.servlets.DataSourceServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF Jndi Lookup Servlet</description>
+		<display-name>IAF Jndi Lookup Servlet</display-name>
+		<servlet-name>IAFJndiLookupServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.utility.secure.servlets.JndiLookupServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF Log Download Servlet</description>
+		<display-name>IAF Log Download Servlet</display-name>
+		<servlet-name>IAFLogDownloadServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.logging.secure.servlets.LogDownloadServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF Log Viewer</description>
+		<display-name>IAF Log Viewer</display-name>
+		<servlet-name>IAFLogViewer</servlet-name>
+		<servlet-class>com.deere.u90.iaf.logviewer.secure.servlets.LogViewer</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF Snoop Servlet</description>
+		<display-name>IAF Snoop Servlet</display-name>
+		<servlet-name>IAFSnoopServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.utility.secure.servlets.SnoopServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>IAF System Properties</description>
+		<display-name>IAF System Properties</display-name>
+		<servlet-name>SystemPropertiesServlet</servlet-name>
+		<servlet-class>com.deere.u90.iaf.configuration.secure.servlets.SystemPropertiesServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GlobalDateServlet</servlet-name>
+		<url-pattern>/servlet/DateServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IAFClassFinderServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.utility.secure.servlets.ClassFinderServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IAFContextServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.configuration.secure.servlets.ContextServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IAFDirectoryViewer</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.utility.secure.servlets.DirectoryViewer</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>IAFEncryptionServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.configuration.secure.servlets.EncryptionServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IAFDataSourceServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.jdbc.connection.secure.servlets.DataSourceServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IAFJndiLookupServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.utility.secure.servlets.JndiLookupServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>IAFLogDownloadServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.logging.secure.servlets.LogDownloadServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IAFLogViewer</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.logviewer.secure.servlets.LogViewer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IAFSnoopServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.utility.secure.servlets.SnoopServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SystemPropertiesServlet</servlet-name>
+		<url-pattern>/servlet/com.deere.u90.iaf.configuration.secure.servlets.SystemPropertiesServlet</url-pattern>
+	</servlet-mapping>
+	
+    <error-page>
+         <error-code>404</error-code>
+        <location>/WEB-INF/jsp/ResourceNotFound.jsp</location>
+    </error-page> 
+	 
+</web-app>

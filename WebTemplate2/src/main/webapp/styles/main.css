@@ -1,0 +1,307 @@
+/*
+* {
+	border: 1px solid black;
+}
+
+* * {
+	border: 1px solid red;
+}
+* * *{
+	border: 1px solid green;
+}
+
+* * * *{
+	border: 1px solid blue;
+}
+*/
+@media (max-width: 750px) {
+    body{font-size: 12px;}
+}
+
+@media (min-width: 750px ) {
+    body{font-size: 14px;}
+}
+
+@media (min-width: 1300px){
+	.container {
+	width: 1336px;
+	}
+}
+body {
+	font-family: Calibri, Verdana, sans-serif;
+	background-color: #efefef;
+}
+
+table {
+	word-wrap: break-word;
+}
+
+th {
+	word-wrap: break-word;
+	max-width: 300px;
+	text-align: center;
+}
+
+td {
+	word-wrap: break-word;
+	max-width: 300px;
+	text-align: center;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.right {
+	float: right;
+}
+
+.left {
+	text-align: left;
+}
+
+.hidden>div {
+    display:none;
+}
+
+.visible>div {
+    display:block;
+}
+
+.tinted-image {
+	vertical-align: middle;
+	width: 20.17px;
+	height: 16px;
+}
+
+.errorcode {
+	color: #B33A3A;
+}
+
+.myinfo {
+	color: #4682B4;
+	vertical-align: middle;
+	font-size: 18px;
+}
+
+.btn-success {
+	color:  #367C2B;
+	background: #e3f4e1;
+}
+
+.btn-primary {
+	color:  #897800;
+	background: #fff7c4;
+}
+
+.btn-success:hover {
+	background: #367C2B;
+}
+
+.btn-danger {
+	color:  #B33A3A;
+	background: #f7e6e6;
+}
+
+.set39 {
+	width: 39px;
+}
+
+.max100 {
+	width: 100px;
+}
+
+.green {
+	color:green;
+}
+
+.red {
+	color: #B33A3A;
+}
+
+.danger {
+	font-family:"Arial Black", Gadget, sans-serif;
+	vertical-align: middle;
+	font-size: 16px;
+	font-weight: bold;
+	color:  #B33A3A;
+}
+
+.primary {
+	color:  #897800;
+}
+
+
+.danger:hover {
+	text-decoration:none;
+  	color:  #B33A3A;
+}
+
+.primary:hover {
+	text-decoration:none;
+  	color:  #897800;
+}
+
+.biggreen {
+	color:green;
+	font-size: 20px;
+}
+
+.imp {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.fineprint{
+	font-size: 12px;
+}
+
+.pad {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.padbot {
+	padding-bottom: 10px;
+	padding-top: 25px;
+}
+
+#unpad {
+	padding-left: 0px;
+	padding-right: 0px;	
+}
+
+header {
+	min-height:110px;
+	background-color:white;
+}
+
+	.logo-container {
+		margin-top:20px;
+	}
+
+	.logo{
+		 max-width:100%;
+		 max-height:75px;
+		 
+	}
+
+	.appname{
+		text-decoration: none;
+		color: #367c2b;
+		font-size:2.3em;
+		margin-top:20px;
+		margin-bottom:5px;
+	}
+	.welcome {	
+		color: #999;
+		margin-bottom:10px;
+	}
+	.username {	
+		color: green;
+		margin:5px;
+	}
+
+.bodypart{
+	min-height:680px;
+	background-color:white;
+	border-left:1px solid #D8D8D8; 
+}
+
+.sidemenu {
+	background-color:white;
+	min-height:680px;
+}
+
+.rowmenu {
+	background-color:white;
+	min-height:650px;
+}
+
+.navbarFont{
+	color: #888;
+	text-align: left;
+	font-size: 1em;
+	font-family: Calibri Light;
+	margin:0px  !important;
+}
+
+a{
+	color:#367C2B;
+}
+
+
+
+footer {
+    background-color: #D8D8D8;
+    border-top: 1px solid #A4A4A4;
+    min-height: 40px;
+    padding-top: 10px;
+}
+
+.rightalign {
+    text-align: right;
+}
+
+
+.dataRow {
+    margin-top: 30px;
+}
+.formData{
+    border:1px solid #E6E6E6;
+    border-radius:20px;
+    padding: 30px;
+    margin-bottom: 10px;
+    margin-top:25px;
+}
+
+    .searchBox, .pagedetails{
+        margin-top: 20px;
+    }
+    .serachButtonGroup{
+        padding: 0px 0px 0px 5px;
+    }
+    .searchResult {
+        margin-top:25px;
+    }
+    .pageinfo{
+    	margin-top:40px;
+    	padding-top: 40px;
+    }
+    
+    .viewbox {
+        border:1px solid #E6E6E6;
+        border-radius:20px;
+        margin-top: 30px
+    }
+    .viewDetailBox{
+        margin-top: 20px
+    }
+    .viewPhoto{
+        height:200px;
+        width:200px;
+    }
+    .individualDetail{
+        padding: 10px;
+    }
+.hiddenSearchSubmitButton{
+    position: absolute; 
+    left: -9999px;
+    width: 1px; 
+    height: 1px;
+}.pagesubheader{
+		color:green;
+		margin-top: 50px;
+	}
+	
+	.nav-stacked > li.activecolor  {
+		background-color: #dddddd;
+	}
+	
+.viewcustomerlabelpadding{
+	padding: 10px;
+}
+
+.editcustomerformrowmargin{
+	margin-top: 30px;
+}
