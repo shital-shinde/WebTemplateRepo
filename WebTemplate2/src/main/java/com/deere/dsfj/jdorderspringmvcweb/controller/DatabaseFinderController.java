@@ -18,8 +18,6 @@ import com.deere.dsfj.jdorderspringmvcweb.form.ContactForm;
 import com.deere.dsfj.jdorderspringmvcweb.service.ContactService;
 
 /** DatabaseSearchController class handles the requests to display the Databases within the desired Search 
- * @author Ethan Jenkins
- * @date 7/20/2015
  */
 @Controller
 public class DatabaseFinderController{

@@ -19,8 +19,6 @@ import com.deere.dsfj.jdorderspringmvcweb.form.ContactForm;
 import com.deere.dsfj.jdorderspringmvcweb.service.ContactService;
 
 /** ContactController class handles the requests to display the Contact Database List  
- * @author Ethan Jenkins
- * @date 7/20/2015
  */
 @Controller
 public class ContactController{

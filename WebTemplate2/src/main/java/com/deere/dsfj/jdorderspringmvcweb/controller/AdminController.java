@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.deere.dsfj.jdorderspringmvcweb.form.ContactForm;
 
 /** AdminController class handles the request to display the Admin Tools and Reports
- * @author Ethan Jenkins
- * @date 7/20/2015
  */
 @Controller
 public class AdminController{

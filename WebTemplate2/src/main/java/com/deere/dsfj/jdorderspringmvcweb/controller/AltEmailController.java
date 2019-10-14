@@ -22,8 +22,6 @@ import com.deere.dsfj.jdorderspringmvcweb.service.AltEmailService;
 
 /**
  * AltEmailController class will handle all AltEmail Contact requests. 
- * @author Ethan Jenkins
- * @date 7/17/2015
  */
 @Controller
 public class AltEmailController{
